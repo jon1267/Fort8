@@ -94,6 +94,16 @@
 
                     </ul>
                 </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <!--<i class="fas fa-bullhorn nav-icon"></i>-->
+                        <i class="far fa-address-card nav-icon"></i>
+                        <!-- новости это посты posts ) -->
+                        <p>Новости</p>
+                    </a>
+                </li>
+
                 <li class="nav-item">
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

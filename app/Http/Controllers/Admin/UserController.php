@@ -21,7 +21,7 @@ class UserController extends Controller
         $users = User::paginate(10);
 
         return view('admin.users.users_content')
-            ->with(['title'=>$title, 'users' => $users,]);
+            ->with(['title'=>$title, 'users' => $users]);
     }
 
     /**
@@ -56,11 +56,6 @@ class UserController extends Controller
         return redirect()->route('admin.user.index')
             ->with(['error' => 'Ошибка добавления пользователя']);
     }
-
-    //public function show(User $user)
-    //{
-        //
-    //}
 
     /**
      * Show the form for editing the specified resource.
