@@ -58,6 +58,8 @@
 <!-- AdminLTE App -->
 <script src="{{ asset('template/dist/js/adminlte.min.js') }}"></script>
 
+<script src="{{ asset('template/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+
 @include('admin.layouts.status-block')
 
 <script src="{{ asset('src/js/jon_func.js') }}"></script>
@@ -93,6 +95,11 @@
     @endif
 </script>--}}
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        bsCustomFileInput.init();
+    });
+</script>
 
 </body>
 </html>

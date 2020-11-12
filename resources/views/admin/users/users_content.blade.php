@@ -50,7 +50,7 @@
                                                         <i class="fas fa-trash" ></i>
                                                     </button>--}}
                                                     <button type="submit" class="btn btn-danger btn-sm" href="#" role="button" title="Удалить пользователя"
-                                                            onclick="confirmDeleteUser('{{$user->id}}')" >
+                                                            onclick="confirmDelete('{{$user->id}}', 'user-delete-')" >
                                                         <i class="fas fa-trash" ></i>
                                                     </button>
                                                 </div>

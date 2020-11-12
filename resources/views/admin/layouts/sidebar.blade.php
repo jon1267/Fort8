@@ -96,7 +96,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.post.index') }}" class="nav-link">
                         <!--<i class="fas fa-bullhorn nav-icon"></i>-->
                         <i class="far fa-address-card nav-icon"></i>
                         <!-- новости это посты posts ) -->
