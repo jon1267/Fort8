@@ -95,6 +95,27 @@
                     </ul>
                 </li>
 
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="far fa-bell nav-icon"></i>
+                        <p>Данные торгов  <i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.parse.data') }}" class="nav-link">
+                                <i class="far fa-hourglass nav-icon"></i>
+                                <p>Обновление данных</p>
+                            </a>
+                            <a href="{{ route('admin.show.data') }}" class="nav-link">
+                                <i class="far fa-eye nav-icon"></i>
+                                <p>Анализ торгов</p>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
                 <li class="nav-item">
                     <a href="{{ route('admin.post.index') }}" class="nav-link">
                         <!--<i class="fas fa-bullhorn nav-icon"></i>-->

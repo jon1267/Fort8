@@ -16,8 +16,8 @@ class Bidding extends Model
 
     protected $dates = ['trade_at',];
 
-    public function instrument()
+    public function instruments()
     {
-        return $this->belongsTo(Bidding::class);
+        return $this->belongsTo(Instruments::class);
     }
 }
