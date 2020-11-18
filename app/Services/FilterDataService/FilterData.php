@@ -88,7 +88,7 @@ class FilterData
     {
         $params = [$fieldName, $fieldValue];
         $this->query->when($params, function ($query, $params) {
-            return $query->orderBy('instrument_id', $params[1]);
+            return $query->orderBy($params[0], $params[1]);
         });
 
         return $this->query;

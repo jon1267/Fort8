@@ -107,16 +107,16 @@ class BiddingDataController extends Controller
 
         $title = 'Выборка данных:  c '. $r['date_from'] . ' по ' . $r['date_to'];
         $instruments = $query->get();
-        //dd($instruments);
         $forSelect = Instruments::select('id', 'title', 'description')->get();
 
-        $filteredInstruments = Instruments::where('id', $r['instrument'])->get();
+        // тут бред в выборку попадают все бензины (и 92 и 95), и !рисуются в 2-ух таблицах (: !!!
+        $filteredInstruments = $query->select('instrument_id')->distinct()->get();
         $instrumentsDecode = [];
-
         foreach ($filteredInstruments as $key => $instrument) {
             $instrumentsDecode[$key]['instrument'] = $instrument;
-            $instrumentsDecode[$key]['decode'] =  $this->decode->handle($instrument);
+            $instrumentsDecode[$key]['decode'] =  $this->decode->handleBy($instrument->instrument_id);
         }
+        //dd($instruments, $instrumentsDecode);
 
         return view('admin.biddings.biddings_content', [
             'title' => $title,

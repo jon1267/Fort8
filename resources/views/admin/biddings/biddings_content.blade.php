@@ -4,7 +4,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header align-items-baseline">
                             <!--<h5>Выборка</h5>-->
@@ -16,13 +16,13 @@
                             @if($instruments)
 
                                 @foreach($data as $instrumentName)
-                                <h3>{{ $instrumentName['instrument']['title'] }}
-                                    <small class="ml-4">{{ $instrumentName['decode'][0] }}</small>
+                                <h5 class="mt-4">{{ $instrumentName['decode'][0] }}
+                                    <small class="ml-4">{{ $instrumentName['decode'][1] }}</small>
                                     <div>
-                                        <small>{{ $instrumentName['decode'][1] }}</small>
-                                        <small class="ml-5">{{ $instrumentName['decode'][2] }}</small>
+                                        <small>{{ $instrumentName['decode'][2] }}</small>
+                                        <small class="ml-5">{{ $instrumentName['decode'][3] }}</small>
                                     </div>
-                                </h3>
+                                </h5>
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                     <tr class="text-center">
@@ -37,13 +37,15 @@
                                     <tbody>
                                     <!-- тут чудеса! не $instrument->bidding->trade_at, а этот цирк! но в релейшене был массв [0] с множеством связ. записей...-->
                                     @foreach($instruments as $instrument)
-                                        <tr class="text-center">
-                                            <td>{{ $instrument->id }}</td>
-                                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $instrument->trade_at)->format('d.m.Y') }}</td>
-                                            {{--<td>{{ $instrument->trade_at->format('d.m.Y') }}</td>--}}
-                                            <td>{{ number_format($instrument->price, 0, '', ' ') }}</td>
-                                            <td>{{ $instrument->volume }}</td>
-                                        </tr>
+                                        @if($instrument->instrument_id == $instrumentName['instrument']->instrument_id)
+                                            <tr class="text-center">
+                                                <td>{{ $instrument->id }}</td>
+                                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $instrument->trade_at)->format('d.m.Y') }}</td>
+                                                {{--<td>{{ $instrument->trade_at->format('d.m.Y') }}</td>--}}
+                                                <td>{{ number_format($instrument->price, 0, '', ' ') }}</td>
+                                                <td>{{ $instrument->volume }}</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
 
                                     </tbody>

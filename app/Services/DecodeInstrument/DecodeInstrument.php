@@ -34,6 +34,7 @@ class DecodeInstrument
         $basis = Basis::where('title', mb_substr($instrument->title, 4, 3))->first();
 
         return [
+            $instrument->title ?? null,
             $good->description ?? null,
             $basis->description ?? null,
             $basis->display ?? null,
