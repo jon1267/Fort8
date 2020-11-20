@@ -86,12 +86,53 @@ class FilterData
 
     public function orderFilter($fieldName, $fieldValue)
     {
+        //есть проблема: отсортировать по 2-ум полям, если второе поле дата и еще DESC.
+        //кидается  SQLSTATE[HY000]: General error: 3065 Expression #2 of ORDER BY clause is not in SELECT list,
+        //references column 'fort8.bidding.trade_at' which is not in SELECT list; this is incompatible with DISTINCT
+        //ну естеств incompatible with DISTINCT сует ларин билдер... без него в мускуле и ПМА все идет!  :(
+
+        /*if (preg_match('/\,/', $fieldName)) {
+            $fields = explode(',', $fieldName);
+            $fieldName = array_values($fields);
+        }*/
+
         $params = [$fieldName, $fieldValue];
         $this->query->when($params, function ($query, $params) {
-            return $query->orderBy($params[0], $params[1]);
+            return $query->orderByRaw('instrument_id', 'trade_at '. $params[1]);
         });
 
         return $this->query;
+    }
+
+    /**
+     * @param string $dateFieldName
+     * @param string $multiSelectField
+     * @param array $multiSelectValues
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function rawFilter(string $dateFieldName = 'trade_at', $multiSelectField, array $multiSelectValues)
+    {
+        $r = $this->request;
+        $params = [$multiSelectField, $multiSelectValues];
+
+        // оч жаль, а результат тотже (таже самая...)
+        return $this->query
+            ->select( 'instrument_id', 'trade_at', 'price', 'volume')
+            ->whereBetween($dateFieldName, [$r['date_from'], $r['date_to']])
+            ->whereIn($params[0], $params[1])
+            ->orderByRaw('instrument_id, trade_at desc');
+
+        /*
+        SELECT * FROM `bidding`
+        WHERE trade_at BETWEEN '2020-11-01' AND '2020-11-18'
+        AND `instrument_id` = 1 OR `instrument_id` = 2
+        ORDER BY `instrument_id`, `trade_at` DESC;
+
+        SELECT * FROM `bidding`
+        WHERE trade_at BETWEEN '2020-10-01' AND '2020-11-18'
+        AND `instrument_id` IN (6,7)
+        ORDER BY `instrument_id` ASC, `trade_at` DESC;
+         */
     }
 
 }

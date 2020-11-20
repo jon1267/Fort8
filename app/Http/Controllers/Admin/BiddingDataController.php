@@ -86,27 +86,38 @@ class BiddingDataController extends Controller
             });
         }
 
-        if (request('instrument')) {
+        // это из селекта выбир. единств значение
+        //if (request('instrument')) {
+        //    $query->when($r, function ($query, $r) {
+        //        return $query->where('instrument_id', $r['instrument']);
+        //    });
+        //}
+
+        // это если select -  multiselect
+        if (is_array(request('instrument'))) {
             $query->when($r, function ($query, $r) {
-                return $query->where('instrument_id', $r['instrument']);
+                return $query->whereIn('instrument_id', $r['instrument']);
             });
         }
 
         if (request('order_by')) {
             $query->when($r, function ($query, $r) {
-                return $query->orderBy('trade_at', $r['order_by']);
+                return $query->orderBy('instrument_id');
             });
         }*/
 
         $filter = FilterData::init('bidding',$r);
         $query = $filter
             ->dateRangeFilter('trade_at')
-            //->fieldFilter('instrument_id', $r['instrument'])
             ->multiSelectFilter('instrument_id', $r['instrument'])
-            ->orderFilter('trade_at', $r['order_by']);
+            //->fieldFilter('instrument_id', $r['instrument'])
+            ->orderFilter('instrument_id, trade_at', $r['order_by']);
+
+        /*$query = $filter
+            ->rawFilter('trade_at', 'instrument_id', $r['instrument']);*/
 
         $title = 'Выборка данных:  c '. $r['date_from'] . ' по ' . $r['date_to'];
-        $instruments = $query->get();
+        $instruments = $query->get();//->sortBy('instrument_id, trade_at', SORT_DESC);
         $forSelect = Instruments::select('id', 'title', 'description')->get();
 
         // тут бред в выборку попадают все бензины (и 92 и 95), и !рисуются в 2-ух таблицах (: !!!
