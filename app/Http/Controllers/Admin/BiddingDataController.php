@@ -63,65 +63,21 @@ class BiddingDataController extends Controller
         if(!empty($r['date_to'])) {
             $r['date_to'] = $this->datepickerToMysql($r['date_to']);
         }
-
         //dd($r);
-
-        /*$query = Bidding::query();
-
-        if ((request('date_from') !== null) && (request('date_to') !== null)) {
-            $query->when($r, function ($query, $r) {
-                return $query->whereBetween('trade_at', [$r['date_from'], $r['date_to']]);
-            });
-        }
-
-        if ((request('date_from') !== null) && (request('date_to') === null)) {
-            $query->when($r, function ($query, $r) {
-                return $query->whereDate('trade_at', '>=' ,$r['date_from']);
-            });
-        }
-
-        if ((request('date_from') === null) && (request('date_to') !== null)) {
-            $query->when($r, function ($query, $r) {
-                return $query->whereDate('trade_at', '<=' ,$r['date_to']);
-            });
-        }
-
-        // это из селекта выбир. единств значение
-        //if (request('instrument')) {
-        //    $query->when($r, function ($query, $r) {
-        //        return $query->where('instrument_id', $r['instrument']);
-        //    });
-        //}
-
-        // это если select -  multiselect
-        if (is_array(request('instrument'))) {
-            $query->when($r, function ($query, $r) {
-                return $query->whereIn('instrument_id', $r['instrument']);
-            });
-        }
-
-        if (request('order_by')) {
-            $query->when($r, function ($query, $r) {
-                return $query->orderBy('instrument_id');
-            });
-        }*/
 
         $filter = FilterData::init('bidding',$r);
         $query = $filter
             ->dateRangeFilter('trade_at')
             ->multiSelectFilter('instrument_id', $r['instrument'])
-            //->fieldFilter('instrument_id', $r['instrument'])
-            ->orderFilter('instrument_id, trade_at', $r['order_by']);
+            //->fieldFilter('instrument_id', $r['instrument'])//в селекте выбирается одно знач. (не multi select)
+            ->orderFilter('trade_at', $r['order_by']);
 
-        /*$query = $filter
-            ->rawFilter('trade_at', 'instrument_id', $r['instrument']);*/
 
         $title = 'Выборка данных:  c '. $r['date_from'] . ' по ' . $r['date_to'];
-        $instruments = $query->get();//->sortBy('instrument_id, trade_at', SORT_DESC);
+        $instruments = $query->get();
         $forSelect = Instruments::select('id', 'title', 'description')->get();
 
-        // тут бред в выборку попадают все бензины (и 92 и 95), и !рисуются в 2-ух таблицах (: !!!
-        $filteredInstruments = $query->select('instrument_id')->distinct()->get();
+        $filteredInstruments = $instruments->unique('instrument_id');
         $instrumentsDecode = [];
         foreach ($filteredInstruments as $key => $instrument) {
             $instrumentsDecode[$key]['instrument'] = $instrument;
@@ -140,7 +96,7 @@ class BiddingDataController extends Controller
 
     /**
      * Datepicker (jquery и AdminLTE3) возвращает дату как строку 'm/d/Y' те 'месяц/день/год'
-     * Этот
+     * Этот метод делает нормальную мускульную дату в формате 'Y-m-d' но для
      * @param string $value
      * @return string
      */
