@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Goods;
+use App\Models\Instruments;
 //use Illuminate\Http\Request;
 use App\Http\Requests\AdminHandbookRequest;
 
-class GoodController extends Controller
+class InstrumentController extends Controller
 {
 
-    private $pageTitle = 'Биржевые товары. Топливо.';
-    private $createRoute = 'admin.good.create';
-    private $editRoute = 'admin.good.edit';
-    private $destroyRoute = 'admin.good.destroy';
-    private $indexRoute = 'admin.good.index';
-    private $storeRoute = 'admin.good.store';
-    private $updateRoute = 'admin.good.update';
+    private $pageTitle = 'Инструменты: топливо, базис и лот поставки';
+    private $createRoute = 'admin.instrument.create';
+    private $editRoute = 'admin.instrument.edit';
+    private $destroyRoute = 'admin.instrument.destroy';
+    private $indexRoute = 'admin.instrument.index';
+    private $storeRoute = 'admin.instrument.store';
+    private $updateRoute = 'admin.instrument.update';
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -26,7 +26,7 @@ class GoodController extends Controller
 
         return view('admin.handbooks.model2_content', [
             'title' => $this->pageTitle,
-            'models' => Goods::paginate(5),
+            'models' => Instruments::paginate(5),
             'createRoute' => $this->createRoute,
             'editRoute' => $this->editRoute,
             'destroyRoute' => $this->destroyRoute,
@@ -54,7 +54,7 @@ class GoodController extends Controller
     public function store(AdminHandbookRequest $request)
     {
         //dd($request);
-        if (Goods::create($request->except('_token'))) {
+        if (Instruments::create($request->except('_token'))) {
             return redirect()->route($this->indexRoute)
                 ->with(['status' => 'Данные успешно добавлены']);
         }
@@ -90,7 +90,7 @@ class GoodController extends Controller
     {
         //dd($request, $id);
         if ($request->has('id')) {
-            $good = Goods::find($request->id);
+            $good = Instruments::find($request->id);
             $good->update($request->except('_token', '_method', 'id'));
 
             return redirect()->route($this->indexRoute)
@@ -111,7 +111,7 @@ class GoodController extends Controller
     public function destroy($id)
     {
         //dd($id, gettype($id));// Внедрение модели (Goods $goods) тут не работает
-        $good = Goods::find($id);
+        $good = Instruments::find($id);
 
         if($good->delete()) {
             return redirect()->route($this->indexRoute)

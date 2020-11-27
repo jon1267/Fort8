@@ -13,12 +13,9 @@
                         <div class="card-header d-flex align-items-baseline">
                             <h3 class="card-title">Все данные</h3>
                             <div>
+                                <!-- data-toggle="modal" data-target="#modal-create" -->
                                 <a href="{{ route($createRoute) }}" class="btn btn-primary ml-4"
-                                   data-toggle="modal" data-target="#modal-lg">Добавить данные
-                                </a>
-                                {{--<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg">
-                                    Добавить данные Modal
-                                </button>--}}
+                                   onclick="showCreateModal()" > Добавить данные </a>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -47,9 +44,9 @@
                                             <td>
                                                 <form action="{{ route($destroyRoute, $model->id) }}" class="form-inline " method="POST" id="model-delete-{{$model->id}}">
                                                     <div class="form-group">
-                                                        {{-- ссылка независима, к форме не привязана, просто чтоб кнопы были в строку --}}
+                                                        {{-- ссылка независима, к форме не привязана, просто чтоб кнопы были в строку  data-toggle="modal" data-target="#modal-update" --}}
                                                         <a href="{{ route($editRoute, $model->id) }}" class="btn btn-primary btn-sm mr-1"
-                                                           title="Редактировать данные" data-toggle="modal" data-target="#modal-lg">
+                                                           title="Редактировать данные" onclick="showUpdateModal('{{ $model->id }}', '{{ $model->title }}', '{{ $model->description }}')">
                                                             <!-- style="line-height: 1.5" тк при подключении модалок оно становится 1 и верстка ползет (bootstrap 4.4) -->
                                                             <i class="fas fa-pen" style="line-height: 1.5"></i>
                                                         </a>
@@ -87,4 +84,24 @@
 
 @endsection
 
-@include('admin.handbooks.good_modal')
+@include('admin.handbooks.create_modal')
+@include('admin.handbooks.update_modal')
+
+<script>
+    function showUpdateModal(id, title, description) {
+        console.log(id, title, description);
+        event.preventDefault();
+        $('#update-id').val(id);
+        $('#update-title').val(title);
+        $('#update-description').val(description);
+        $('#modal-update').css('display', 'block');
+        $('#modal-update').modal('show');
+    }
+    function showCreateModal() {
+        event.preventDefault();
+        $('#update-title').val('');
+        $('#update-description').val('');
+        $('#modal-create').css('display', 'block');
+        $('#modal-create').modal('show');
+    }
+</script>
