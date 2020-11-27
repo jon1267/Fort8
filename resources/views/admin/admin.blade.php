@@ -61,8 +61,9 @@
 <script src="{{ asset('template/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 
 @include('admin.layouts.status-block')
+@include('admin.layouts.scripts')
 
-<script src="{{ asset('src/js/jon_func.js') }}"></script>
+{{--<script src="{{ asset('src/js/jon_func.js') }}"></script>--}}
 
 <!-- незабыть добавить на кликаемой кнопе id="add-user-button"
 <script>

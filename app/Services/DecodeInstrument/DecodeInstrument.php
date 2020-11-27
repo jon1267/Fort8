@@ -44,7 +44,7 @@ class DecodeInstrument
     /**
      * Метод выше расшифровка 1-го инструмента, это возвращает всю табл. торгов (bidding)
      * но пристегивает те-же расшифровки, к каждой записи (излишество, надо к каждой 11-ой)
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Query\Builder
      */
     public function allHandle()
     {
@@ -53,8 +53,7 @@ class DecodeInstrument
                 'instruments.title', 'goods.description', 'basis.description', 'basis.display')
             ->leftJoin('instruments', 'instruments.id' , '=' ,'bidding.instrument_id')
             ->leftJoin('goods', 'goods.title', '=', DB::raw('SUBSTR(instruments.title, 1, 4)'))
-            ->leftJoin('basis', 'basis.title', '=', DB::raw('SUBSTR(instruments.title, 5, 3)'))
-            ->get();
+            ->leftJoin('basis', 'basis.title', '=', DB::raw('SUBSTR(instruments.title, 5, 3)'));
     }
 
 /* это работает в ПМА

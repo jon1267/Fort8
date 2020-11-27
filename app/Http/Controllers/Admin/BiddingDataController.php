@@ -41,9 +41,10 @@ class BiddingDataController extends Controller
             $instrumentsDecode[$key]['decode'] =  $this->decode->handle($instrument);
         }
 
-        // наворочено немерянно !!! вьюха biddings_content рабочая (но вырождается)
-        //$plantInstruments = $this->decode->allHandle();
-        //dd($instruments);
+        // наворочено ? но строка ниже - все решает для всех данных и с пагинацией :)
+        $plantInstruments = $this->decode->allHandle()->orderBy('instrument_id')
+            ->latest('trade_at')->get(); // paginate(15);
+        dd($plantInstruments);
         //return view('admin.biddings.biddings_content', ['title' => $title,'instruments' => $instruments]);
 
         return view('admin.biddings.bid_content', [

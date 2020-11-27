@@ -19,12 +19,12 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <!-- style="width: 10px" -->
                                     <th>ID</th>
                                     <th>Title</th>
                                     <th>Text</th>
                                     <th>Image</th>
-                                    <th>Action</th>
+                                    <!-- style="width: 100px" устраняет: при сужении кнопы вылазят из ячеек таблицы -->
+                                    <th style="width: 100px;">Action</th>
 
                                 </tr>
                                 </thead>

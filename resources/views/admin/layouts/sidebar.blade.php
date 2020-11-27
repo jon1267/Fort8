@@ -66,7 +66,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.good.index') }}" class="nav-link">
                                 <!--<i class="fab fa-penny-arcade nav-icon"></i>-->
                                 <i class="fas fa-pen nav-icon"></i>
                                 <p>Вид товара</p>
