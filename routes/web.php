@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\GoodController;
 use App\Http\Controllers\Admin\InstrumentController;
+use App\Http\Controllers\Admin\BasisController;
 use App\Http\Controllers\Admin\ParseDataController;
 use App\Http\Controllers\Admin\BiddingDataController;
 
@@ -24,6 +25,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('post', PostController::class)->except(['show']);
     Route::resource('good', GoodController::class)->except(['show']);
     Route::resource('instrument', InstrumentController::class)->except(['show']);
+    Route::resource('basis', BasisController::class)->except(['show']);
 
     //парсер данных со страницы биржи. ParseDataController@getInstrumentData
     Route::get('/parse', [ParseDataController::class, 'getInstrumentData' ])->name('parse.data');

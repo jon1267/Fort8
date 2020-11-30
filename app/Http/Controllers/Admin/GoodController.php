@@ -7,6 +7,15 @@ use App\Models\Goods;
 //use Illuminate\Http\Request;
 use App\Http\Requests\AdminHandbookRequest;
 
+/**
+ * Class GoodController (заготовка под CRUD controller) Пока: копипастим:) этот контроллер, под др. именем.
+ * вставляем в use нужную модель, нужные для create & update форм реквесты, прописываем (в private св-вах)
+ * 6 штук имен [name(!)] роутов, как они получаются в Route::resource(...)
+ * Вьюхи (model2_content, create_modal, update_modal)  работают в расчете что в мускуле имена полей
+ * 'title' и 'description' ... (пока нет реакции на ошибки валидации - модалка, скрывается данные не пишутся)
+ *
+ * @package App\Http\Controllers\Admin
+ */
 class GoodController extends Controller
 {
 
@@ -110,7 +119,7 @@ class GoodController extends Controller
      */
     public function destroy($id)
     {
-        //dd($id, gettype($id));// Внедрение модели (Goods $goods) тут не работает
+        //dd($id, gettype($id));// Внедрен модели (Goods $goods) тут не работает, тупо возвр null(!)
         $good = Goods::find($id);
 
         if($good->delete()) {
@@ -118,7 +127,7 @@ class GoodController extends Controller
                 ->with(['status' => 'Данные успешно удалены.']);
         }
 
-        return redirect()->back()
+        return redirect()->route($this->indexRoute)
             ->with(['error' => 'Ошибка удаления данных.']);
     }
 }

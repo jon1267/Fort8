@@ -73,7 +73,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.basis.index') }}" class="nav-link">
                                 <i class="fas fa-pen nav-icon"></i>
                                 <p>Код базаса</p>
                             </a>
