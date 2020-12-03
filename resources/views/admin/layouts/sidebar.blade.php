@@ -42,7 +42,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.userr.index') }}" class="nav-link">
                                 <i class="fas fa-unlock nav-icon"></i>
                                 <p>Роли</p>
                             </a>

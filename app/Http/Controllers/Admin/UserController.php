@@ -45,7 +45,8 @@ class UserController extends Controller
         //dd($request);
 
         $data = $request->except('_token', 'password_confirmation');
-        $data['password'] = bcrypt($data['password']);
+        //тк в модели поставлен setPasswordAttribute($password). если там его нет, тут (ниже) раскомменировать
+        //$data['password'] = bcrypt($data['password']);
 
         if(User::create($data)) {
             return redirect()->route('admin.user.index')

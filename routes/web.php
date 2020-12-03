@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\InstrumentController;
 use App\Http\Controllers\Admin\BasisController;
 use App\Http\Controllers\Admin\ParseDataController;
 use App\Http\Controllers\Admin\BiddingDataController;
+use App\Http\Controllers\Admin\UserRoleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,6 +33,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/show', [BiddingDataController::class, 'instruments' ])->name('show.data');
 
     Route::post('/filter', [BiddingDataController::class, 'filter' ])->name('filter.data');
+
+    // это надо было назвать user (не userr) но уже занято, и ломать не хоца...
+    Route::resource('userr', UserRoleController::class)->except(['show']);
 
 });
 
