@@ -16,11 +16,11 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     return view('admin.admin'); //dd(auth()->user());
-})->middleware('auth');
+})->middleware(['auth', 'auth.isAdmin']);
 
 
 //Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'auth.isAdmin'])->group(function () {
 
     Route::resource('user', UserController::class)->except(['show']);
     Route::resource('post', PostController::class)->except(['show']);

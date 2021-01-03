@@ -7,6 +7,7 @@ use App\Models\User;
 //use Illuminate\Http\Request;
 use App\Http\Requests\AdminStoreUserRequest;
 use App\Http\Requests\AdminUpdateUserRequest;
+//use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -17,6 +18,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        //if (Gate::allows('is-admin')) {
+        //    // here actions allows for admin
+        //}
+        //dd('You need to be an admin... you none');
+
         $title = 'Менеджер пользователей';
         $users = User::paginate(10);
 
